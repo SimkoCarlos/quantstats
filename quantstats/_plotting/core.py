@@ -336,13 +336,16 @@ def plot_histogram(returns, resample="M", bins=20,
 
     ax.axvline(returns.mean(), ls="--", lw=1.5,
                color=colors[2], zorder=2, label="Average")
-
-    _sns.distplot(returns, bins=bins,
-                  axlabel="", color=colors[0], hist_kws=dict(alpha=1),
-                  kde=kde,
-                  # , label="Kernel Estimate"
-                  kde_kws=dict(color='black', alpha=.7),
-                  ax=ax)
+    # KDE Error Fix 
+    try:
+        _sns.distplot(returns, bins=bins,
+                    axlabel="", color=colors[0], hist_kws=dict(alpha=1),
+                    kde=kde,
+                    # , label="Kernel Estimate"
+                    kde_kws=dict(color='black', alpha=.7),
+                    ax=ax)
+    except:
+        pass
 
     ax.xaxis.set_major_formatter(_plt.FuncFormatter(
         lambda x, loc: "{:,}%".format(int(x*100))))
